@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: test-microservice
+  data:
+    mongodb:
+      host: localhost
+      port: 28015
+      database: questionDB
+server:
+  port: 8083
+
+logging:
+  level:
+    org:
+      springframework:
+        data:
+          mongodb:
+            core:
+              MongoTemplate: DEBUG
