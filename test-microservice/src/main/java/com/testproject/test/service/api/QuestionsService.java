@@ -6,11 +6,13 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface QuestionsService {
     Flux<QuestionOutputDto> getAll();
     Flux<QuestionOutputDto> getThemedQuestions(String questionArea);
     Flux<QuestionOutputDto> saveAll(List<QuestionInputDto> newQuestions);
-    Mono<QuestionOutputDto> changeQuestion(String questionId, QuestionInputDto changedQuestion);
-    Mono<Void> deleteQuestion(String id);
+    Mono<QuestionOutputDto> changeQuestion(UUID questionId, QuestionInputDto changedQuestion);
+    Mono<Void> deleteQuestion(UUID id);
+    Mono<Void> deleteAll();
 }

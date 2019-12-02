@@ -6,10 +6,11 @@ import com.testproject.test.domain.QuestionType;
 import lombok.Data;
 
 import java.util.List;
+import java.util.UUID;
 
 @Data
 public class QuestionOutputDto {
-    private String id;
+    private UUID id;
 
     private String text;
 

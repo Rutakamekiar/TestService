@@ -7,19 +7,16 @@ import com.testproject.test.dtomapping.dto.QuestionOutputDto;
 import com.testproject.test.dtomapping.mappers.QuestionMapper;
 import com.testproject.test.repository.QuestionRepository;
 import com.testproject.test.service.api.QuestionsService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class QuestionsServiceImpl implements QuestionsService {
-
-    private static final Logger LOG = LoggerFactory.getLogger(QuestionsServiceImpl.class);
 
     @Autowired
     private QuestionRepository questionRepository;
@@ -48,7 +45,7 @@ public class QuestionsServiceImpl implements QuestionsService {
     }
 
     @Override
-    public Mono<QuestionOutputDto> changeQuestion(String questionId, QuestionInputDto changedQuestion) {
+    public Mono<QuestionOutputDto> changeQuestion(UUID questionId, QuestionInputDto changedQuestion) {
         return questionRepository.findById(questionId)
                 .flatMap(question -> {
                     Question newQuestion = questionMapper.inputDtoToQuestion(changedQuestion);
@@ -59,7 +56,12 @@ public class QuestionsServiceImpl implements QuestionsService {
     }
 
     @Override
-    public Mono<Void> deleteQuestion(String id) {
+    public Mono<Void> deleteQuestion(UUID id) {
         return questionRepository.deleteById(id);
+    }
+
+    @Override
+    public Mono<Void> deleteAll() {
+        return questionRepository.deleteAll();
     }
 }

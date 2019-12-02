@@ -13,6 +13,7 @@ import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/questions")
@@ -47,16 +48,21 @@ public class QuestionsController {
 
     @PutMapping("/{id}")
     public Mono<ResponseEntity<QuestionOutputDto>> changeQuestionParameters(
-            @PathVariable String id, @RequestBody QuestionInputDto questionInputDto) {
+            @PathVariable UUID id, @RequestBody QuestionInputDto questionInputDto) {
         return questionsService.changeQuestion(id, questionInputDto)
                 .map(questionOutputDto -> ResponseEntity.status(HttpStatus.OK).body(questionOutputDto))
                 .defaultIfEmpty(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")
-    public Mono<ResponseEntity> deleteQuestionFromBase(@PathVariable String id) {
+    public Mono<ResponseEntity> deleteQuestionFromBase(@PathVariable UUID id) {
         return questionsService.deleteQuestion(id)
                 .map(question -> ResponseEntity.status(HttpStatus.NO_CONTENT))
                 .cast(ResponseEntity.class);
+    }
+
+    @DeleteMapping
+    public Mono<Void> deleteAllQuestions() {
+        return questionsService.deleteAll();
     }
 }
